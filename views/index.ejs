@@ -1,0 +1,73 @@
+<!-- views/index.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cookbook</title>
+  </head>
+  <body>
+    <% if (user) { %>
+    <h1>Welcome to the Cookbook, <%= user.username %>!</h1>
+    <p><a href="/auth/sign-out">Sign out</a></p>
+
+    <% } else { %>
+    <h1>Welcome to the Cookbook, guest.</h1>
+    <p>
+      <a href="/auth/sign-up">Sign up</a> or <a href="/auth/sign-in">Sign in</a>
+    </p>
+    <% } %>
+  </body>
+</html>
+
+<!-- views/auth/sign-up.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up</title>
+  </head>
+  <body>
+    <h1>Create a new account!</h1>
+    <form action="/auth/sign-up" method="POST">
+      <label for="username">Username:</label>
+      <input type="text" name="username" id="username" required />
+
+      <label for="password">Password:</label>
+      <input type="password" name="password" id="password" required />
+
+      <label for="confirmPassword">Confirm Password:</label>
+      <input
+        type="password"
+        name="confirmPassword"
+        id="confirmPassword"
+        required
+      />
+
+      <button type="submit">Sign up</button>
+    </form>
+  </body>
+</html>
+
+<!-- views/auth/sign-in.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign In</title>
+  </head>
+  <body>
+    <h1>Sign In</h1>
+    <form action="/auth/sign-in" method="POST">
+      <label for="username">Username:</label>
+      <input type="text" name="username" id="username" required />
+
+      <label for="password">Password:</label>
+      <input type="password" name="password" id="password" required />
+
+      <button type="submit">Sign in</button>
+    </form>
+  </body>
+</html>
