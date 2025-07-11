@@ -12,6 +12,8 @@ const authController = require("./controllers/auth.js");
 const recipesController = require("./controllers/recipes.js");
 const ingredientsController = require("./controllers/ingredients.js");
 
+const foodController = require("./controllers/food.js");
+
 // Import middleware
 const passUserToView = require("./middleware/pass-user-to-view");
 const isSignedIn = require("./middleware/is-signed-in");
@@ -52,7 +54,16 @@ app.use(passUserToView);
 // Routes
 
 app.use("/auth", authController);
-
+// app.js
+app.use(
+  "/users/:userId/food",
+  (req, res, next) => {
+    // Attach userId to request object
+    req.userId = req.params.userId; // Now available in all downstream routes
+    next();
+  },
+  foodController
+);
 app.use("/recipes", recipesController);
 app.use("/ingredients", ingredientsController);
 

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Pantry</title>
+  </head>
+  <body>
+    <%- include('../partials/_navbar.ejs') %>
+    <h1>Welcome to my Pantry</h1>
+    <% if (pantry.length > 0) { %>
+    <div class="pantry-list">
+      <% pantry.forEach(item => { %>
+      <div class="pantry-item">
+        <h3><%= item.name %></h3>
+      </div>
+      <% }); %>
+    </div>
+    <% } else { %>
+    <p class="empty-pantry">Your pantry is empty. Add some items!</p>
+    <% } %>
+    <a href="/users/<%= userId %>/food/new" class="add-item">Add New Item</a>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+      }
+      .pantry-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+      .pantry-item {
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 5px;
+        width: calc(33.333% - 20px);
+      }
+      .empty-pantry {
+        color: #888;
+      }
+      .add-item {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 10px 15px;
+        background-color: #28a745;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+      }
+    </style>
+  </body>
+</html>
