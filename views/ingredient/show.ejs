@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= ingredient.name %> | Recipe App</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 0;
+        color: #333;
+      }
+      .detail-container {
+        max-width: 600px;
+        margin: 40px auto;
+        padding: 30px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+      h1 {
+        color: #2c3e50;
+        margin-bottom: 30px;
+        font-weight: 600;
+        border-bottom: 2px solid #eee;
+        padding-bottom: 10px;
+      }
+      .detail-item {
+        margin-bottom: 25px;
+      }
+      .detail-label {
+        font-weight: 500;
+        color: #7f8c8d;
+        margin-bottom: 5px;
+      }
+      .detail-value {
+        font-size: 18px;
+        color: #2c3e50;
+      }
+      .actions {
+        display: flex;
+        gap: 15px;
+        margin-top: 40px;
+      }
+      .btn {
+        padding: 12px 24px;
+        border-radius: 6px;
+        font-size: 16px;
+        font-weight: 500;
+        text-decoration: none;
+        transition: all 0.3s;
+      }
+      .btn-edit {
+        background-color: #3498db;
+        color: white;
+      }
+      .btn-edit:hover {
+        background-color: #2980b9;
+      }
+      .btn-delete {
+        background-color: #e74c3c;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+      .btn-delete:hover {
+        background-color: #c0392b;
+      }
+      .btn-back {
+        display: inline-block;
+        background-color: #95a5a6;
+        color: white;
+        margin-top: 30px;
+      }
+      .btn-back:hover {
+        background-color: #7f8c8d;
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <%- include('../partials/_navbar.ejs') %>
+
+    <div class="detail-container">
+      <h1><i class="fas fa-utensils"></i> <%= ingredient.name %></h1>
+
+      <div class="detail-item">
+        <div class="detail-label">Ingredient Name</div>
+        <div class="detail-value"><%= ingredient.name %></div>
+      </div>
+
+      <div class="actions">
+        <a href="/ingredients/<%= ingredient._id %>/edit" class="btn btn-edit">
+          <i class="fas fa-edit"></i> Edit
+        </a>
+        <form
+          action="/ingredients/<%= ingredient._id %>?_method=DELETE"
+          method="POST"
+          style="display: inline"
+        >
+          <button type="submit" class="btn btn-delete">
+            <i class="fas fa-trash-alt"></i> Delete
+          </button>
+        </form>
+      </div>
+
+      <a href="/ingredients" class="btn btn-back">
+        <i class="fas fa-arrow-left"></i> Back to Ingredients
+      </a>
+    </div>
+  </body>
+</html>

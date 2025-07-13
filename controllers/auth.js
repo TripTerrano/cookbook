@@ -3,34 +3,28 @@ const router = express.Router();
 const User = require("../models/user.js");
 const bcrypt = require("bcrypt");
 
-// Sign-up Routes
 router.get("/sign-up", (req, res) => {
   res.render("auth/sign-up.ejs");
 });
 
 router.post("/sign-up", async (req, res) => {
   try {
-    // Check if username exists
     const userInDatabase = await User.findOne({ username: req.body.username });
     if (userInDatabase) {
       return res.send("Username already taken.");
     }
 
-    // Check password match
     if (req.body.password !== req.body.confirmPassword) {
       return res.send("Password and Confirm Password must match");
     }
 
-    // Hash password
     const hashedPassword = bcrypt.hashSync(req.body.password, 10);
 
-    // Create user
     const user = await User.create({
       username: req.body.username,
       password: hashedPassword,
     });
 
-    // Auto sign-in after sign-up
     req.session.user = {
       username: user.username,
       _id: user._id,
@@ -45,7 +39,6 @@ router.post("/sign-up", async (req, res) => {
   }
 });
 
-// Sign-in Routes
 router.get("/sign-in", (req, res) => {
   res.render("auth/sign-in.ejs");
 });
@@ -79,7 +72,6 @@ router.post("/sign-in", async (req, res) => {
   }
 });
 
-// Sign-out Route
 router.get("/sign-out", (req, res) => {
   req.session.destroy(() => {
     res.redirect("/");

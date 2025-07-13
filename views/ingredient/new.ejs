@@ -61,7 +61,6 @@
         font-weight: 500;
         cursor: pointer;
         transition: all 0.3s;
-        text-decoration: none;
       }
       .btn-submit {
         background-color: #2ecc71;
@@ -73,6 +72,10 @@
       .btn-cancel {
         background-color: #95a5a6;
         color: white;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
       }
       .btn-cancel:hover {
         background-color: #7f8c8d;
@@ -83,6 +86,10 @@
         margin-top: 5px;
       }
     </style>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
   </head>
   <body>
     <%- include('../partials/_navbar.ejs') %>
@@ -98,17 +105,19 @@
             name="name"
             id="name"
             required
-            placeholder="e.g., Garlic, Olive Oil, Fresh Basil"
+            placeholder="e.g., Fresh Basil, Extra Virgin Olive Oil"
             autofocus
           />
           <p class="input-hint">
-            Use specific names for better recipe matching
+            Use specific names for better recipe organization
           </p>
         </div>
 
         <div class="form-actions">
           <a href="/ingredients" class="btn btn-cancel">Cancel</a>
-          <button type="submit" class="btn btn-submit">Add Ingredient</button>
+          <button type="submit" class="btn btn-submit">
+            <i class="fas fa-plus"></i> Add Ingredient
+          </button>
         </div>
       </form>
     </div>

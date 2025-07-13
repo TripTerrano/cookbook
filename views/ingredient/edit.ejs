@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Add Ingredient | Recipe App</title>
+    <title>Edit <%= ingredient.name %> | Recipe App</title>
     <style>
       body {
         font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -24,7 +24,8 @@
         color: #2c3e50;
         margin-bottom: 30px;
         font-weight: 600;
-        text-align: center;
+        border-bottom: 2px solid #eee;
+        padding-bottom: 10px;
       }
       .form-group {
         margin-bottom: 25px;
@@ -61,26 +62,31 @@
         font-weight: 500;
         cursor: pointer;
         transition: all 0.3s;
-        text-decoration: none;
       }
       .btn-submit {
-        background-color: #2ecc71;
+        background-color: #3498db;
         color: white;
       }
       .btn-submit:hover {
-        background-color: #27ae60;
+        background-color: #2980b9;
       }
       .btn-cancel {
         background-color: #95a5a6;
         color: white;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
       }
       .btn-cancel:hover {
         background-color: #7f8c8d;
       }
-      .input-hint {
-        font-size: 14px;
-        color: #7f8c8d;
-        margin-top: 5px;
+      .btn-delete {
+        background-color: #e74c3c;
+        color: white;
+      }
+      .btn-delete:hover {
+        background-color: #c0392b;
       }
     </style>
   </head>
@@ -88,27 +94,34 @@
     <%- include('../partials/_navbar.ejs') %>
 
     <div class="form-container">
-      <h1>Add New Ingredient</h1>
+      <h1>Edit "<%= ingredient.name %>"</h1>
 
-      <form action="/ingredients" method="POST">
+      <form
+        action="/ingredients/<%= ingredient._id %>?_method=PUT"
+        method="POST"
+      >
         <div class="form-group">
           <label for="name">Ingredient Name</label>
           <input
             type="text"
             name="name"
             id="name"
+            value="<%= ingredient.name %>"
             required
-            placeholder="e.g., Garlic, Olive Oil, Fresh Basil"
-            autofocus
+            placeholder="Enter ingredient name"
           />
-          <p class="input-hint">
-            Use specific names for better recipe matching
-          </p>
         </div>
 
         <div class="form-actions">
           <a href="/ingredients" class="btn btn-cancel">Cancel</a>
-          <button type="submit" class="btn btn-submit">Add Ingredient</button>
+          <button type="submit" class="btn btn-submit">
+            Update Ingredient
+          </button>
+          <a
+            href="/ingredients/<%= ingredient._id %>/delete"
+            class="btn btn-delete"
+            >Delete</a
+          >
         </div>
       </form>
     </div>

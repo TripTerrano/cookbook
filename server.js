@@ -14,24 +14,22 @@ const ingredientsController = require("./controllers/ingredients.js");
 
 const foodController = require("./controllers/food.js");
 
-// Import middleware
 const passUserToView = require("./middleware/pass-user-to-view");
 const isSignedIn = require("./middleware/is-signed-in");
 
-// Database connection
 mongoose
   .connect(process.env.MONGODB_URI)
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("MongoDB connection error:", err));
 
-// Middleware
+const Recipe = require("./models/recipe.js");
+
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(morgan("dev"));
 app.use(express.static(path.join(__dirname, "public")));
 app.set("view engine", "ejs");
 
-// Session configuration
 app.use(
   session({
     secret: process.env.SESSION_SECRET || "your-fallback-secret",
@@ -48,18 +46,14 @@ app.use(
   })
 );
 
-// Custom middleware
 app.use(passUserToView);
 
-// Routes
-
 app.use("/auth", authController);
-// app.js
+
 app.use(
   "/users/:userId/food",
   (req, res, next) => {
-    // Attach userId to request object
-    req.userId = req.params.userId; // Now available in all downstream routes
+    req.userId = req.params.userId;
     next();
   },
   foodController
@@ -67,11 +61,17 @@ app.use(
 app.use("/recipes", recipesController);
 app.use("/ingredients", ingredientsController);
 
-app.get("/", (req, res) => {
-  res.render("index");
+app.get("/", async (req, res) => {
+  if (req.session.user) {
+    const recipes = await Recipe.find();
+    console.log("recipes", recipes);
+
+    res.render("index.ejs", { recipes: recipes || [] });
+  } else {
+    res.render("index.ejs", { recipes: [] });
+  }
 });
 
-// Error handling
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send("Server Error");

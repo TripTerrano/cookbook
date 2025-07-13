@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= recipe.name %> | Recipe App</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 0;
+        color: #333;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 30px 20px;
+      }
+      .recipe-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+      }
+      h1 {
+        color: #2c3e50;
+        font-weight: 600;
+        margin: 0;
+      }
+      .recipe-card {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        margin-bottom: 30px;
+      }
+      h2 {
+        color: #2c3e50;
+        font-weight: 500;
+        margin-top: 0;
+        border-bottom: 2px solid #eee;
+        padding-bottom: 10px;
+      }
+      .instructions {
+        white-space: pre-line;
+        line-height: 1.8;
+        font-size: 16px;
+      }
+      .ingredients-section {
+        margin: 30px 0;
+      }
+      .ingredients-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 15px;
+        margin-top: 20px;
+      }
+      .ingredient-card {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 6px;
+        border-left: 4px solid #2ecc71;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      }
+      .empty-state {
+        color: #7f8c8d;
+        font-style: italic;
+      }
+      .actions {
+        display: flex;
+        gap: 15px;
+        margin: 30px 0;
+      }
+      .btn {
+        padding: 12px 24px;
+        border-radius: 6px;
+        font-size: 16px;
+        font-weight: 500;
+        text-decoration: none;
+        transition: all 0.3s;
+      }
+      .btn-edit {
+        background-color: #3498db;
+        color: white;
+      }
+      .btn-edit:hover {
+        background-color: #2980b9;
+      }
+      .btn-delete {
+        background-color: #e74c3c;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+      .btn-delete:hover {
+        background-color: #c0392b;
+      }
+      .btn-back {
+        background-color: #95a5a6;
+        color: white;
+      }
+      .btn-back:hover {
+        background-color: #7f8c8d;
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <%- include('../partials/_navbar.ejs') %>
+
+    <div class="container">
+      <div class="recipe-header">
+        <h1><i class="fas fa-book-open"></i> <%= recipe.name %></h1>
+      </div>
+
+      <div class="recipe-card">
+        <h2><i class="fas fa-list-ol"></i> Instructions</h2>
+        <div class="instructions"><%= recipe.instructions %></div>
+
+        <div class="ingredients-section">
+          <h2><i class="fas fa-carrot"></i> Ingredients</h2>
+          <% if (recipe.ingredients && recipe.ingredients.length > 0) { %>
+          <div class="ingredients-grid">
+            <% recipe.ingredients.forEach(ingredient => { %>
+            <div class="ingredient-card">
+              <i
+                class="fas fa-circle"
+                style="font-size: 8px; color: #2ecc71; margin-right: 8px"
+              ></i>
+              <%= ingredient.name %>
+            </div>
+            <% }); %>
+          </div>
+          <% } else { %>
+          <p class="empty-state">No ingredients added yet.</p>
+          <% } %>
+        </div>
+      </div>
+
+      <div class="actions">
+        <a href="/recipes/<%= recipe._id %>/edit" class="btn btn-edit">
+          <i class="fas fa-edit"></i> Edit Recipe
+        </a>
+        <form
+          action="/recipes/<%= recipe._id %>?_method=DELETE"
+          method="POST"
+          style="display: inline"
+        >
+          <button type="submit" class="btn btn-delete">
+            <i class="fas fa-trash-alt"></i> Delete Recipe
+          </button>
+        </form>
+      </div>
+
+      <a href="/recipes" class="btn btn-back">
+        <i class="fas fa-arrow-left"></i> Back to Recipes
+      </a>
+    </div>
+  </body>
+</html>

@@ -5,8 +5,6 @@ const foodSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-
-  // Add other food-specific fields as needed
 });
 
 const userSchema = new mongoose.Schema({

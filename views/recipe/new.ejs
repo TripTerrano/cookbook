@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add New Recipe</title>
+    <style>
+      .ingredient-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 10px;
+        margin: 15px 0;
+      }
+      .ingredient-item {
+        display: flex;
+        align-items: center;
+      }
+      textarea {
+        width: 100%;
+        min-height: 150px;
+        margin-bottom: 15px;
+      }
+      label {
+        display: block;
+        margin: 10px 0 5px;
+      }
+      button {
+        padding: 8px 15px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <%- include('../partials/_navbar.ejs') %>
+
+    <h1>Add New Recipe</h1>
+    <form action="/recipes" method="POST">
+      <div>
+        <label for="name">Recipe Name:</label>
+        <input
+          type="text"
+          name="name"
+          id="name"
+          required
+          placeholder="Enter recipe name"
+        />
+      </div>
+
+      <div>
+        <label for="instructions">Instructions:</label>
+        <textarea
+          name="instructions"
+          id="instructions"
+          required
+          placeholder="Step-by-step instructions..."
+        ></textarea>
+      </div>
+
+      <div>
+        <label>Select Ingredients:</label>
+        <div class="ingredient-list">
+          <% ingredients.forEach(ingredient => { %>
+          <div class="ingredient-item">
+            <input
+              type="checkbox"
+              name="ingredients"
+              id="ingredient-<%= ingredient._id %>"
+              value="<%= ingredient._id %>"
+            />
+            <label for="ingredient-<%= ingredient._id %>">
+              <%= ingredient.name %>
+            </label>
+          </div>
+          <% }); %>
+        </div>
+      </div>
+
+      <button type="submit">Create Recipe</button>
+    </form>
+  </body>
+</html>

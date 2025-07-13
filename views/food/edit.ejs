@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Add Ingredient | Recipe App</title>
+    <title>Edit <%= food.name %> | Recipe App</title>
     <style>
       body {
         font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -12,8 +12,8 @@
         padding: 0;
         color: #333;
       }
-      .form-container {
-        max-width: 500px;
+      .edit-container {
+        max-width: 600px;
         margin: 40px auto;
         padding: 30px;
         background: white;
@@ -24,7 +24,8 @@
         color: #2c3e50;
         margin-bottom: 30px;
         font-weight: 600;
-        text-align: center;
+        border-bottom: 2px solid #eee;
+        padding-bottom: 10px;
       }
       .form-group {
         margin-bottom: 25px;
@@ -35,7 +36,9 @@
         font-weight: 500;
         color: #2c3e50;
       }
-      input[type="text"] {
+      input[type="text"],
+      textarea,
+      select {
         width: 100%;
         padding: 12px 15px;
         border: 1px solid #ddd;
@@ -48,9 +51,9 @@
         outline: none;
         box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
       }
-      .form-actions {
+      .actions {
         display: flex;
-        justify-content: space-between;
+        gap: 15px;
         margin-top: 30px;
       }
       .btn {
@@ -62,53 +65,58 @@
         cursor: pointer;
         transition: all 0.3s;
         text-decoration: none;
+        display: inline-block;
+        text-align: center;
       }
       .btn-submit {
-        background-color: #2ecc71;
+        background-color: #3498db;
         color: white;
       }
       .btn-submit:hover {
-        background-color: #27ae60;
+        background-color: #2980b9;
       }
       .btn-cancel {
-        background-color: #95a5a6;
+        background-color: #e74c3c;
         color: white;
       }
       .btn-cancel:hover {
-        background-color: #7f8c8d;
+        background-color: #c0392b;
       }
-      .input-hint {
-        font-size: 14px;
-        color: #7f8c8d;
-        margin-top: 5px;
+      .btn-delete {
+        background-color: #f39c12;
+        color: white;
+        margin-left: auto;
+      }
+      .btn-delete:hover {
+        background-color: #d35400;
       }
     </style>
   </head>
   <body>
     <%- include('../partials/_navbar.ejs') %>
 
-    <div class="form-container">
-      <h1>Add New Ingredient</h1>
+    <div class="edit-container">
+      <h1>Edit "<%= food.name %>"</h1>
 
-      <form action="/ingredients" method="POST">
+      <form action="../food/<%= food._id %>?_method=PUT" method="POST">
         <div class="form-group">
-          <label for="name">Ingredient Name</label>
+          <label for="name">Food Name</label>
           <input
             type="text"
             name="name"
             id="name"
+            value="<%= food.name %>"
             required
-            placeholder="e.g., Garlic, Olive Oil, Fresh Basil"
-            autofocus
+            placeholder="Enter food name"
           />
-          <p class="input-hint">
-            Use specific names for better recipe matching
-          </p>
         </div>
 
-        <div class="form-actions">
-          <a href="/ingredients" class="btn btn-cancel">Cancel</a>
-          <button type="submit" class="btn btn-submit">Add Ingredient</button>
+        <div class="actions">
+          <button type="submit" class="btn btn-submit">Update Item</button>
+          <a href="../food/<%= food._id %>" class="btn btn-cancel">Cancel</a>
+          <a href="../food/<%= food._id %>/delete" class="btn btn-delete"
+            >Delete Item</a
+          >
         </div>
       </form>
     </div>
